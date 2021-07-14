@@ -6,6 +6,19 @@ For example
 
 ```ts
 type isPillarMen = Includes<['Kars', 'Esidisi', 'Wamuu', 'Santana'], 'Dio'> // expected to be `false`
+
+
+解答：
+type Includes<T extends readonly any[], U> = U extends T[number] ? true : false;
+
+
+别人的答案：
+//看不懂......
+type MyEqual<X, Y> = (<T>() => T extends X ? 1 : 2 ) extends (<T>() => T extends Y ? 1 : 2) ? true : false
+
+type Includes<T extends readonly any[], U> = true extends {
+  [I in keyof T]: MyEqual<T[I], U>
+}[number] ? true : false
 ```
 
 
