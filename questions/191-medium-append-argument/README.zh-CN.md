@@ -9,6 +9,11 @@ type Fn = (a: number, b: string) => number
 
 type Result = AppendArgument<Fn, boolean> 
 // 期望是 (a: number, b: string, x: boolean) => number
+
+
+解答：
+
+type AppendArgument<T, P> = T extends (...args: infer K) => infer Q  ? (...args:[...K, P]) => Q : T
 ```
 
 > 本挑战来自于 [@maciejsikora](https://github.com/maciejsikora) 在 Dev.io 上的[文章](https://dev.to/macsikora/advanced-typescript-exercises-question-4-495c)
