@@ -6,6 +6,11 @@ For example
 
 ```ts
 type capitalized = Capitalize<'hello world'> // expected to be 'Hello world'
+
+
+解答：
+
+type Capitalize<S extends string> = S extends `${infer P}${infer V}` ? `${Uppercase<P>}${V}`: S
 ```
 
 
