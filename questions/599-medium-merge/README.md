@@ -2,5 +2,19 @@
 
 Merge two types into a new type. Keys of the second type overrides keys of the first type.
 
+解答：
+
+// type Test = {
+//    ab: string
+//} & {
+//    cd: string
+//} 并不会解析成 {
+//    ab: string
+//    cd: string
+//}
+
+type Merge<F, S> = {
+  [K in (keyof F) | (keyof S)]: K extends keyof S ? S[K] :  K extends keyof F ? F[K] : never
+};
 
 <!--info-footer-start--><br><a href="../../README.md" target="_blank"><img src="https://img.shields.io/badge/-Back-grey" alt="Back"/></a> <a href="https://tsch.js.org/599/answer" target="_blank"><img src="https://img.shields.io/badge/-Share%20your%20Solutions-teal" alt="Share your Solutions"/></a> <a href="https://tsch.js.org/599/solutions" target="_blank"><img src="https://img.shields.io/badge/-Check%20out%20Solutions-de5a77?logo=awesome-lists&logoColor=white" alt="Check out Solutions"/></a> <!--info-footer-end-->
