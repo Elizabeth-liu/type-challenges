@@ -14,6 +14,13 @@ type arr2 = [3, 2, 1]
 
 type re1 = Pop<arr1> // expected to be ['a', 'b', 'c']
 type re2 = Pop<arr2> // expected to be [3, 2]
+
+解答：
+
+type Pop<T extends any[]> = T extends [...infer Rest, infer Last] ? Rest: never
+type Shift<T extends any[]> = T extends [ infer First,...infer Rest] ? Rest: never
+type Push<T extends any[], E> = [...T, E]
+type Unshift<T extends any[], E> = [E, ...T]
 ```
 
 **额外**：同样，您也可以实现`Shift`，`Push`和`Unshift`吗？
