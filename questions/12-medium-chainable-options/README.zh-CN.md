@@ -23,6 +23,13 @@ interface Result {
     value: string
   }
 }
+
+解答：
+// 还是有点不明白
+type Chainable<T = {}> = {
+  option: <K extends string, V>(key: K, value: V) => Chainable<T & {[P in K] : V}>
+  get(): T
+}
 ```
 
 你只需要在类型层面实现这个功能 - 不需要实现任何 TS/JS 的实际逻辑。
