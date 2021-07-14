@@ -6,6 +6,15 @@ For example:
 
 ```ts
 type flatten = Flatten<[1, 2, [3, 4], [[[5]]]]> // [1, 2, 3, 4, 5]
+
+解答：
+type Flatten<T extends Array<any>> = 
+  T extends [infer F, ...infer L] 
+  ? (
+    F extends Array<any> 
+    ? [...Flatten<F>, ...Flatten<L>] 
+    : [F, ...Flatten<L>]) 
+  : []
 ```
 
 
