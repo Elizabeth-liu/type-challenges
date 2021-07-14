@@ -6,6 +6,10 @@ For example
 
 ```ts
 type Result = Concat<[1], [2]> // expected to be [1, 2]
+
+解答：
+// T不能像值一样用数组方法，却能用...
+type Concat<T extends any[], U extends any[]> = [...T, ...U]
 ```
 
 
