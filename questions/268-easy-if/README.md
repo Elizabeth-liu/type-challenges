@@ -7,6 +7,10 @@ For example:
 ```ts
 type A = If<true, 'a', 'b'>  // expected to be 'a'
 type B = If<false, 'a', 'b'> // expected to be 'b'
+
+解答：
+// 用 C extends boolean 限定 C 只有true,false两个值
+type If<C extends boolean, T, F> = C extends true ? T : F
 ```
 
 
