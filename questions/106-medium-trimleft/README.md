@@ -6,6 +6,12 @@ For example
 
 ```ts
 type trimed = TrimLeft<'  Hello World  '> // expected to be 'Hello World  '
+
+解答：
+
+1. type TrimLeft<S extends string> = S extends `${infer First}${infer Rest}` ? First extends ' '| '\n'|'\t' ? TrimLeft<Rest> : S : never 
+2. type TrimLeft<S extends string> = S extends `${' '|'\n'|'\t'}${infer F}` ? TrimLeft<F> : S;
+
 ```
 
 
