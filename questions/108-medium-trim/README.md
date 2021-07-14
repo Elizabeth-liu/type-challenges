@@ -6,6 +6,15 @@ For example
 
 ```ts
 type trimed = Trim<'  Hello World  '> // expected to be 'Hello World'
+
+
+解答：
+
+1. type Trim<S extends string> = S extends `${' '|'\n'|'\t'}${infer F}` ? Trim<F> : S extends `${infer F}${' '|'\n'|'\t'}` ? Trim<F> : S;
+
+2. type Space = ' ' | '\t' | '\n';
+   type Trim<S extends string> = S extends `${Space}${infer T}` | `${infer T}${Space}` ? Trim<T> : S;
+
 ```
 
 
