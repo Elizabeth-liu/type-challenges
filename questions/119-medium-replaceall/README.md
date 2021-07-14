@@ -6,6 +6,14 @@ For example
 
 ```ts
 type replaced = ReplaceAll<'t y p e s', ' ', ''> // expected to be 'types'
+
+解答：
+
+type ReplaceAll<S extends string, From extends string, To extends string> =From extends '' ?
+  S : 
+  S extends `${infer R}${From}${infer U}` ?
+    ReplaceAll<`${R}${To}${U}`, From, To> :
+    S;
 ```
 
 
