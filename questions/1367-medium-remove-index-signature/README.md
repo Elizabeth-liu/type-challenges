@@ -13,6 +13,12 @@ type Foo = {
 
 type A = RemoveIndexSignature<Foo>  // expected { foo(): void }
 
+
+解答：
+// 不懂为什么是string extends K 而不是 K extends string
+type RemoveIndex<T> = {
+  [ K in keyof T as (string extends K) ? never : number extends K ? never : K ] : T[K]
+};
 ```
 
 
