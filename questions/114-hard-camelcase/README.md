@@ -7,6 +7,11 @@ For example
 ```ts
 type camelCase1 = CamelCase<'hello_world_with_types'> // expected to be 'helloWorldWithTypes'
 type camelCase2 = CamelCase<'HELLO_WORLD_WITH_TYPES'> // expected to be same as previous one
+
+
+// your answers
+type CamelCase<S extends string> = S extends `${infer F}_${infer L}` ? `${Lowercase<F>}${Capitalize<CamelCase<Lowercase<L>>>}` : Lowercase<S>
+
 ```
 
 
