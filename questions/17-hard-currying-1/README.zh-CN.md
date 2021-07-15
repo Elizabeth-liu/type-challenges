@@ -14,6 +14,15 @@ const three = add(1, 2)
 
 const curriedAdd = Currying(add)
 const five = curriedAdd(2)(3)
+
+解答：
+declare function Currying<F>(fn: F): Curried<F>
+type Curried<F> =
+    F extends (...args: infer A) => infer R
+    ? A extends [infer First, ...infer Other]
+        ? (arg: First) => Curried<(...args: Other) => R>
+        : R
+    : never;
 ```
 
 传递给`Currying`的函数可能有多个参数，您需要正确键入它。
