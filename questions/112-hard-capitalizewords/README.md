@@ -6,6 +6,14 @@ For example
 
 ```ts
 type capitalized = CapitalizeWords<'hello world, my friends'> // expected to be 'Hello World, My Friends'
+
+
+
+type Sep = ' ' | '.' | ','
+type CapitalizeWords<S extends string, Prev extends string=' '> = 
+  S extends `${infer L}${infer Rest}` 
+    ? `${Prev extends Sep ? Capitalize<L> : L}${CapitalizeWords<Rest, L>}`
+    : S
 ```
 
 
