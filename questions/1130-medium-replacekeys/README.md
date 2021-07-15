@@ -31,6 +31,14 @@ type Nodes = NodeA | NodeB | NodeC
 type ReplacedNodes = ReplaceKeys<Nodes, 'name' | 'flag', {name: number, flag: string}> // {type: 'A', name: number, flag: string} | {type: 'B', id: number, flag: string} | {type: 'C', name: number, flag: string} // would replace name from string to number, replace flag from number to string.
 
 type ReplacedNotExistKeys = ReplaceKeys<Nodes, 'name', {aa: number}> // {type: 'A', name: never, flag: number} | NodeB | {type: 'C', name: never, flag: number} // would replace name to never
+
+解答：
+//不懂
+type ReplaceKeys<T, U, R> = T extends T
+  ? {
+      [k in keyof T]: k extends Extract<k, U> ? R[Extract<k, keyof R>] : T[k];
+    }
+  : never;
 ```
 
 
