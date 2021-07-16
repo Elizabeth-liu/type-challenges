@@ -26,6 +26,26 @@ type T1 = UniqFoo["foo"] // 2
 type T2 = Equal<UniqFoo["bar"], UniqFoo["baz"]> // false
 type T3 = UniqFoo["bar"][0] // 1
 type T4 = Equal<keyof Foo & string, keyof UniqFoo & string> // true
+
+
+
+解答：
+//太难了&不知道哪里会用，不看了
+type Key = string | number | symbol;
+
+declare const KEY: unique symbol;
+
+type DeepObjectToUniq<
+  O extends object,
+  Parent = O,
+  Path extends readonly Key[] = []
+> = {
+  [K in keyof O]: O[K] extends object
+    ? DeepObjectToUniq<O[K], O, [...Path, K]>
+    : O[K];
+} & {
+  readonly [KEY]?: readonly [Parent, Path];
+};
 ```
 
 
