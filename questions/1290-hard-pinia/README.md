@@ -56,11 +56,31 @@ const store = defineStore({
 })
 ```
 
+```typescript
 Using it is just to call it:
 
 ```typescript
 const returnValue = store.doSideEffect()
 ```
+
+```typescript
+type GetThisWithoutState<Getters, Actions> = {
+    readonly [K in keyof Getters]: Getters[K] extends (...args: never[]) => infer R ? R : never;
+} &
+    Actions;
+
+declare function defineStore<
+    State,
+    Getters,
+    Actions,
+    ThisWithoutState = GetThisWithoutState<Getters, Actions>
+>(store: {
+    id: string;
+    state: () => State;
+    getters?: Getters & ThisType<Readonly<State> & ThisWithoutState>;
+    actions?: Actions & ThisType<State & ThisWithoutState>;
+}): Readonly<State> & ThisWithoutState;
+  ```typescript
 
 Actions can return any value or return nothing, and it can receive any number of parameters with different types.
 Parameters types and return type can't be lost, which means type-checking must be available at call side.
