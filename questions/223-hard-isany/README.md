@@ -5,4 +5,13 @@ Sometimes it's useful to detect if you have a value with `any` type. This is esp
 So, let's write a utility type `IsAny<T>`, which takes input type `T`. If `T` is `any`, return `true`, otherwise, return `false`.
 
 
+```ts
+都很神奇的解法
+// https://stackoverflow.com/questions/49927523/disallow-call-with-any/49928360#49928360
+1.type IsAny<T> = 0 extends (1 & T) ? true : false
+
+2.type IsAny<T> = ((a: [any]) => [any]) extends ((a: T) => T) ? true : false;
+```ts
+
+
 <!--info-footer-start--><br><a href="../../README.md" target="_blank"><img src="https://img.shields.io/badge/-Back-grey" alt="Back"/></a> <a href="https://tsch.js.org/223/answer" target="_blank"><img src="https://img.shields.io/badge/-Share%20your%20Solutions-teal" alt="Share your Solutions"/></a> <a href="https://tsch.js.org/223/solutions" target="_blank"><img src="https://img.shields.io/badge/-Check%20out%20Solutions-de5a77?logo=awesome-lists&logoColor=white" alt="Check out Solutions"/></a> <!--info-footer-end-->
