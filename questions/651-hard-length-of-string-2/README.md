@@ -4,6 +4,17 @@ Implement a type `LengthOfString<S>` that calculates the length of the template 
 
 ```ts
 type T0 = LengthOfString<"foo"> // 3
+
+
+解答：
+type LengthOfString<
+  S extends string,
+  M extends 0[] = []
+> = S extends `${infer A}${infer B}${infer C}${infer D}${infer E}${infer F}${infer G}${infer H}${infer I}${infer J}${infer Rest}`
+  ? LengthOfString<Rest, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...M]>
+  : S extends `${infer First}${infer Rest}`
+  ? LengthOfString<Rest, [0, ...M]>
+  : M["length"];
 ```
 
 The type must support strings several hundred characters long (the usual recursive calculation of the string length is limited by the depth of recursive function calls in TS, that is, it supports strings up to about 45 characters long).
