@@ -30,6 +30,31 @@ props: {
 }
 // -->
 type Props = { foo: boolean | number | string }
+
+
+解答：
+type Computed<C> = {
+  [P in keyof C]: C[P] extends (...args: any[]) => infer R ? R : never;
+}
+
+type Constructor<T> = T extends (...args: any) => infer R ? R : T extends new (...args: any) => infer R2 ? R2 : any
+
+type PropType<T> = T extends Array<any> ?  Constructor<T[number]> : Constructor<T>
+
+type Prop<P> = {
+  [K in keyof P]: P[K] extends {}
+    ? 'type' extends keyof P[K]
+      ? PropType<P[K]['type']>
+      : PropType<P[K]>
+    : PropType<P[K]>
+}
+
+declare function VueBasicProps<P, D, C, M>(options: {
+  props: P;
+  data: (this: Prop<P>) => D;
+  computed: C & ThisType<D>;
+  methods: M & ThisType<D & Computed<C> & M & Prop<P>>;
+}): any
 ```
 
 When an empty object is passed, the key should be inferred to `any`.
