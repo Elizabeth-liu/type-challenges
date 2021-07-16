@@ -21,5 +21,23 @@ Enum<["macOS", "Windows", "Linux"], true>
 // -> { readonly MacOS: 0, readonly Windows: 1, readonly Linux: 2 }
 ```
 
+```ts
+什么鬼。。
+export type Enum<
+    T extends readonly string[],
+    N extends boolean = false,
+    R = {}
+> =
+    N extends true
+        ? T extends readonly [...infer Init, infer Last]
+            ? Init extends string[] // cast
+                ? Enum<Init, true,
+                      R & Record<Capitalize<Last & string>, Init["length"]>
+                  >
+                : never
+            : { readonly [K in keyof R]: R[K] } // flatten
+        : { readonly [K in T[number] as Capitalize<K>]: K }
+;
+```ts
 
 <!--info-footer-start--><br><a href="../../README.md" target="_blank"><img src="https://img.shields.io/badge/-Back-grey" alt="Back"/></a> <a href="https://tsch.js.org/472/answer" target="_blank"><img src="https://img.shields.io/badge/-Share%20your%20Solutions-teal" alt="Share your Solutions"/></a> <a href="https://tsch.js.org/472/solutions" target="_blank"><img src="https://img.shields.io/badge/-Check%20out%20Solutions-de5a77?logo=awesome-lists&logoColor=white" alt="Check out Solutions"/></a> <!--info-footer-end-->
