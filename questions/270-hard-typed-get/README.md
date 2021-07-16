@@ -19,6 +19,17 @@ type Data = {
 type A = Get<Data, 'hello'> // 'world'
 type B = Get<Data, 'foo.bar.count'> // 6
 type C = Get<Data, 'foo.bar'> // { value: 'foobar', count: 6 }
+
+
+解答：
+
+type Get<T, K> = 
+    K extends keyof T ? T[K] :
+    K extends `${infer F}.${infer R}` 
+    ? F extends keyof T 
+      ? Get<T[F], R> 
+      : never 
+    : never
 ```
 
 Accessing arrays is not required in this challenge.
