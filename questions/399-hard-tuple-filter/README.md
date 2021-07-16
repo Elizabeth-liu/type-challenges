@@ -5,6 +5,16 @@ Implement a type `FilterOut<T, F>` that filters out items of the given type `F` 
 For example,
 ```ts
 type Filtered = FilterOut<[1, 2, null, 3], null> // [1, 2, 3]
+
+
+解答：
+
+type FilterOut<T extends any[], F> =
+  T extends [infer head, ...infer tail]
+    ? [head] extends [F]
+      ? FilterOut<tail, F>
+      : [head, ...FilterOut<tail, F>]
+  : [];
 ```
 
 
