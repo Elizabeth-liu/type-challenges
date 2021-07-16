@@ -20,6 +20,17 @@ type ControlsMap = {
   f: 'float',
   p: 'pointer',
 }
+
+type ParsePrintFormat<
+  S extends string,
+  A extends ControlsMap[keyof ControlsMap][] = []
+> = S extends `${infer _}%${infer P}${infer Rest}`
+  ? P extends keyof ControlsMap
+    ? ParsePrintFormat<Rest, [...A, ControlsMap[P]]>
+    : ParsePrintFormat<Rest, A>
+  : A;
+
+  type result = ParsePrintFormat<"The result is %d."> 
 ```
 
 
