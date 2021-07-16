@@ -9,6 +9,11 @@ type FormatCase1 = Format<"%sabc"> // FormatCase1 : string => string
 type FormatCase2 = Format<"%s%dabc"> // FormatCase2 : string => number => string
 type FormatCase3 = Format<"sdabc"> // FormatCase3 :  string
 type FormatCase4 = Format<"sd%abc"> // FormatCase4 :  string
+
+
+// 先不细看了
+type Format<T extends string> = T extends `${infer N}%${infer K}${infer L}` ? K extends 's' ? (arg: string)=> Format<L> : K extends 'd' ? (arg: number)=> Format<L> : never : string
+
 ```
 
 
