@@ -30,4 +30,36 @@ Equal<UnionToTuple<'a' | 'a' | 'a'>, UnionToTuple<'a'>>         // will always b
 ```
 
 
+
+```ts
+/**
+ * UnionToIntersection<{ foo: string } | { bar: string }> =
+ *  { foo: string } & { bar: string }.
+ */
+type UnionToIntersection<U> = (
+  U extends unknown ? (arg: U) => 0 : never
+) extends (arg: infer I) => 0
+  ? I
+  : never;
+
+/**
+ * LastInUnion<1 | 2> = 2.
+ */
+type LastInUnion<U> = UnionToIntersection<
+  U extends unknown ? (x: U) => 0 : never
+> extends (x: infer L) => 0
+  ? L
+  : never;
+
+/**
+ * UnionToTuple<1 | 2> = [1, 2].
+ */
+type UnionToTuple<U, Last = LastInUnion<U>> = [U] extends [never]
+  ? []
+  : [...UnionToTuple<Exclude<U, Last>>, Last];
+```ts
+  
+  
+  
+
 <!--info-footer-start--><br><a href="../../README.md" target="_blank"><img src="https://img.shields.io/badge/-Back-grey" alt="Back"/></a> <a href="https://tsch.js.org/730/answer" target="_blank"><img src="https://img.shields.io/badge/-Share%20your%20Solutions-teal" alt="Share your Solutions"/></a> <a href="https://tsch.js.org/730/solutions" target="_blank"><img src="https://img.shields.io/badge/-Check%20out%20Solutions-de5a77?logo=awesome-lists&logoColor=white" alt="Check out Solutions"/></a> <hr><h3>Related Challenges</h3><a href="https://github.com/type-challenges/type-challenges/blob/master/questions/55-hard-union-to-intersection/README.md" target="_blank"><img src="https://img.shields.io/badge/-55%E3%83%BBUnion%20to%20Intersection-de3d37" alt="55・Union to Intersection"/></a> <!--info-footer-end-->
